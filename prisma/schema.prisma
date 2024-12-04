@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique @db.VarChar(100)
+  password String   @db.VarChar(255)  // Increased length to accommodate hashed passwords
+  name     String   @db.VarChar(100)
+  todos    Todo[]   @relation("UserTodos") // Add relation to Todo model
+}
+
+model Todo {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(200)
+  completed Boolean  @default(false)
+  userId    Int
+  user      User     @relation("UserTodos", fields: [userId], references: [id]) // Relating Todo with User
+
+  @@index([userId]) // Added index for faster queries involving userId
+}
