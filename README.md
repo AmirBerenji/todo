@@ -1,4 +1,4 @@
--To install MySql on Docker and run the application, run the following codes.
+- To install MySql on Docker and run the application, run the following codes.
 
 1- docker-compose up -d
 2- npm install
